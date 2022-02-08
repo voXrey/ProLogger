@@ -1,0 +1,15 @@
+{
+  "name": "prologger",
+  "version": "0.1.0",
+  "description": "A logger discord bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "voXrey",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^13.6.0"
+  }
+}
