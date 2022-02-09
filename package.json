@@ -10,6 +10,7 @@
   "author": "voXrey",
   "license": "MIT",
   "dependencies": {
-    "discord.js": "^13.6.0"
+    "discord.js": "^13.6.0",
+    "js-logger": "^1.6.1"
   }
 }
