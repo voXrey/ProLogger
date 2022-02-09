@@ -1,7 +1,8 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const CONFIG = require('./config.json'); // load config
-const logger = require('./src/logger.js');
+const logger = require('./src/core/logger.js'); // get logger
+const database = require('./src/core/database.js'); // get database manager
 
 const allIntents = new Discord.Intents(32767);
 const client = new Discord.Client({intents:allIntents});  // create bot

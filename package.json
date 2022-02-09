@@ -11,6 +11,8 @@
   "license": "MIT",
   "dependencies": {
     "discord.js": "^13.6.0",
-    "js-logger": "^1.6.1"
+    "js-logger": "^1.6.1",
+    "sqlite": "^4.0.23",
+    "sqlite3": "^5.0.2"
   }
 }
