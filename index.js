@@ -38,15 +38,19 @@ for (const file of eventFiles) {
 console.log('Events setted up');
 
 // setup commands handler with on_message
-client.on('messageCreate', message => {
+client.on('messageCreate', async message => {
+    if (message.author.bot) return;
+
     const command = message.content.toLowerCase();
-    if (command.startsWith(CONFIG.PREFIX)) {
+
+    var prefix = await database.getGuildPrefix(message.guild.id);
+    if (prefix == 'default') prefix = CONFIG.PREFIX;
+
+    if (command.startsWith(prefix)) {
         const argsWithPrefix = command.split(' ');
         const args = argsWithPrefix.slice(1);
         const commandName = argsWithPrefix[0].slice(1);
-
         if (!client.commands.has(commandName)) return;
-        
         
         logger.commandInvoked(message.author, commandName, command, message.guild);
         try {

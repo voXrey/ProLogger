@@ -20,23 +20,39 @@ class mydatabase {
     }
 
     async request(request, args) {
-        const db = await this.openDb();
+        var db = await this.openDb();
         await db.run(request, args);
         await db.close();
     }
 
     async getOne(request, args) {
-        db = await this.openDb();
+        var db = await this.openDb();
         const result = await db.get(request, args);
         await db.close();
         return result;
     }
 
     async getAll(request, args) {
-        db = await this.openDb();
+        var db = await this.openDb();
         const result = await db.all(request, args);
         await db.close();
         return result;
+    }
+
+    async getGuildPrefix(guild_id) {
+        var result = await this.getOne(`SELECT prefix FROM settings WHERE guild_id = ?`, [guild_id]);
+        return result.prefix;
+    }
+    async setGuildPrefix(guild_id, prefix) {
+        await this.request(`UPDATE settings SET prefix = ? WHERE guild_id = ?`, [prefix, guild_id]);
+    }
+
+    async getGuildLangage(guild_id) {
+        var result = await this.getOne(`SELECT langage FROM settings WHERE guild_id = ?`, [guild_id]);
+        return result.prefix;
+    }
+    async setGuildLangage(guild_id, langage) {
+        await this.request(`UPDATE settings SET langage = ? WHERE guild_id = ?`, [langage, guild_id]);
     }
 }
 
