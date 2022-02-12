@@ -7,6 +7,8 @@ const database = require('./src/core/database.js'); // get database manager
 const allIntents = new Discord.Intents(32767);
 const client = new Discord.Client({intents:allIntents});  // create bot
 
+console.log('---------------');
+
 // setup commands file
 client.commands = new Discord.Collection(); // create collection of bot's commands
 const commandFolders = fs.readdirSync('./src/commands');
@@ -20,6 +22,7 @@ for (const commandFolder of commandFolders) {
         client.commands.set(command.name, command);
     }
 }
+console.log('Commands setted up');
 
 // setup events
 const eventFiles = fs.readdirSync('./src/events').filter(file => file.endsWith('.js'));
@@ -32,6 +35,7 @@ for (const file of eventFiles) {
         client.on(event.name, (...args) => event.execute(...args));
     }
 }
+console.log('Events setted up');
 
 // setup commands handler with on_message
 client.on('messageCreate', message => {
@@ -53,6 +57,7 @@ client.on('messageCreate', message => {
         }
     }
 })
+console.log('Commands handler setted up');
 
 
 client.on('error', console.error); // display errors

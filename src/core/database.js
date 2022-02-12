@@ -1,5 +1,5 @@
-import sqlite3 from 'sqlite3'
-import { open } from 'sqlite'
+const sqlite3 = require('sqlite3');
+const sqlite = require('sqlite');
 
 
 class mydatabase {
@@ -8,27 +8,31 @@ class mydatabase {
         this.filepath = filepath
     }
 
-    async openDb () {
-        return open({
+    async openDb() {
+        return sqlite.open({
           filename: this.filepath,
           driver: sqlite3.Database
         })
     }
 
-    query(request, args) {
-        db = await this.openDb();
-        await db.exec(request, args);
+    async closeDb(db) {
+        db
+    }
+
+    async request(request, args) {
+        const db = await this.openDb();
+        await db.run(request, args);
         await db.close();
     }
 
-    getOne(request, args) {
+    async getOne(request, args) {
         db = await this.openDb();
         const result = await db.get(request, args);
         await db.close();
         return result;
     }
 
-    getAll(request, args) {
+    async getAll(request, args) {
         db = await this.openDb();
         const result = await db.all(request, args);
         await db.close();
