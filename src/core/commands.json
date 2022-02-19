@@ -1,0 +1,36 @@
+{
+    "info": {
+        "name": "Info",
+        "commands": {
+            "help": {
+                "usage": "help",
+                "aliases": [],
+                "description": {
+                    "en": "Send the help page with the commands list",
+                    "fr": "Envoie la page d'aide avec la liste des commandes"
+                },
+                "args": [
+                    {
+                        "name": "command",
+                        "type": "3",
+                        "description": {
+                            "en": "A command whose you want help",
+                            "fr": "La commande dont vous voulez l'aide"
+                        }
+                    }
+                ],
+                "permissions": []
+            },
+            "invite": {
+                "usage": "invite",
+                "aliases": [],
+                "description": {
+                    "en": "Send link to invite bot",
+                    "fr": "Envoie un lien pour inviter le bot"
+                },
+                "args": [],
+                "permissions": []
+            }
+        }
+    }
+}
