@@ -1,17 +1,16 @@
 {
   "name": "prologger",
   "version": "0.1.0",
-  "description": "A logger discord bot",
+  "description": "A discord bot built in js",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "voXrey",
+  "author": "voxrey",
   "license": "MIT",
   "dependencies": {
     "discord.js": "^13.6.0",
-    "js-logger": "^1.6.1",
+    "dotenv": "^16.0.0",
     "sqlite": "^4.0.23",
     "sqlite3": "^5.0.2"
   }

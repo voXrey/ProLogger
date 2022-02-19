@@ -1,5 +1,3 @@
-const Discord = require('discord.js');
-
 class mylogger {
     
     commandError(user, commandName, command, guild, error) {
@@ -12,4 +10,4 @@ class mylogger {
 }
 
 const logger = new mylogger();
-module.exports = logger;
+export default logger;

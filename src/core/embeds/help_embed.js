@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js');
-const commands_json = require('../commands.json');
+const commands_json = require('../../data/commands.json');
 
 var fields = []
 for(var key in commands_json) {

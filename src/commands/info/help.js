@@ -1,4 +1,4 @@
-const help_embed = require('../../core/embeds/help');
+const help_embed = require('../../core/embeds/help_embed');
 
 module.exports = {
 	name: 'help',

@@ -1,5 +1,5 @@
-const sqlite3 = require('sqlite3');
-const sqlite = require('sqlite');
+import { Database } from 'sqlite3';
+import { open } from 'sqlite';
 
 
 class mydatabase {
@@ -9,9 +9,9 @@ class mydatabase {
     }
 
     async openDb() {
-        return sqlite.open({
+        return open({
           filename: this.filepath,
-          driver: sqlite3.Database
+          driver: Database
         })
     }
 
@@ -57,4 +57,4 @@ class mydatabase {
 }
 
 const database = new mydatabase('./src/data/database.sqlite3');
-module.exports = database;
+export default database;

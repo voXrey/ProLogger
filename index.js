@@ -1,68 +1,69 @@
-const fs = require('fs');
-const Discord = require('discord.js');
-const CONFIG = require('./config.json'); // load config
-const logger = require('./src/core/logger.js'); // get logger
-const database = require('./src/core/database.js'); // get database manager
+require('dotenv').config()
+const { Client, Collection, Intents } = require('discord.js')
+const config = require('./src/data/config.json')
+const botCommands = require('./src/commands')
+const botEvents = require('./src/events')
 
-const allIntents = new Discord.Intents(32767);
-const client = new Discord.Client({intents:allIntents});  // create bot
+const TOKEN = process.env.TOKEN
+const { prefix, name } = config
 
-console.log('---------------');
-
-// setup commands file
-client.commands = new Discord.Collection(); // create collection of bot's commands
-const commandFolders = fs.readdirSync('./src/commands');
-for (const commandFolder of commandFolders) {
-    const commandFiles = fs.readdirSync(`./src/commands/${commandFolder}`).filter(file => file.endsWith('.js'));
-
-    for (const file of commandFiles) {
-        const command = require(`./src/commands/${commandFolder}/${file}`);
-        // set a new item in the Collection
-        // with the key as the command name and the value as the exported module
-        client.commands.set(command.name, command);
-    }
+// Config
+const configSchema = {
+    name,
+    defaultColors: {
+        success: '#41b95f',
+        neutral: '#287db4',
+        warning: '#ff7100',
+        error: '#c63737',
+    },
 }
-console.log('Commands setted up');
 
-// setup events
-const eventFiles = fs.readdirSync('./src/events').filter(file => file.endsWith('.js'));
-for (const file of eventFiles) {
-    const event = require(`./src/events/${file}`);
-    if (event.once) {
-        client.once(event.name, (...args) => event.execute(...args));
-    }
-    else {
-        client.on(event.name, (...args) => event.execute(...args));
-    }
+// Define the bot
+const bot = {
+    client: new Client({intents:new Intents(32767)}),
+    log: console.log, // eslint-disable-line no-console
+    commands: new Collection(),
+		config: configSchema, // add the new config to our bot object
 }
-console.log('Events setted up');
 
-// setup commands handler with on_message
-client.on('messageCreate', async message => {
-    if (message.author.bot) return;
+// Load the bot
+bot.load = function load() {
+    this.log('Loading commands...')
+    Object.keys(botCommands).forEach(key => {
+        this.commands.set(botCommands[key].name, botCommands[key])
+    })
+    this.log('Connecting...')
+    this.client.login(TOKEN)
+}
 
-    const command = message.content.toLowerCase();
+// Set bot events
+for (const event of botEvents) {
+	if (event.once) {
+		bot.client.once(event.name, (...args) => event.execute(...args));
+	} else {
+		bot.client.on(event.name, (...args) => event.execute(...args));
+	}
+}
 
-    var prefix = await database.getGuildPrefix(message.guild.id);
-    if (prefix == 'default') prefix = CONFIG.PREFIX;
+// Commands handler
+bot.client.on('messageCreate', async message => {
+    // ignore all other messages without our prefix
+    if (!message.content.startsWith(prefix)) return
 
-    if (command.startsWith(prefix)) {
-        const argsWithPrefix = command.split(' ');
-        const args = argsWithPrefix.slice(1);
-        const commandName = argsWithPrefix[0].slice(1);
-        if (!client.commands.has(commandName)) return;
-        
-        logger.commandInvoked(message.author, commandName, command, message.guild);
-        try {
-            client.commands.get(commandName).execute(message, args);
-        } catch (error) {
-            logger.commandError(message.author, commandName, command, message.guild, error);
-            message.reply('There was an error trying to execute that command!');
-        }
+    const args = message.content.split(" ")
+    // get the first word (lowercase) and remove the prefix
+    const command = args.shift().toLowerCase().slice(1)
+
+	//check if command is in bot's commands
+    if (!bot.commands.has(command)) return
+
+    try {
+        bot.commands.get(command).execute(message, args, bot)
+    } catch (error) {
+        bot.log(error)
+        message.reply('there was an error trying to execute that command!')
     }
-})
-console.log('Commands handler setted up');
+});
 
 
-client.on('error', console.error); // display errors
-client.login(CONFIG.TOKEN); // start bot
+bot.load();

@@ -1,4 +1,4 @@
-const invite_embed = require('../../core/embeds/invite');
+const invite_embed = require('../../core/embeds/invite_embed');
 
 module.exports = {
 	name: 'invite',

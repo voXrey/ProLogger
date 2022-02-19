@@ -2,6 +2,6 @@ module.exports = {
     name: 'ready',
     once: true,
     execute(client) {
-        console.log(`Poweron! Logged in as ${client.user.tag}\n---------------`);
+        console.log(`Poweron! Logged in as ${client.user.tag}`);
     }
 }
