@@ -1,5 +1,5 @@
-import { Database } from 'sqlite3';
-import { open } from 'sqlite';
+const { Database } = require('sqlite3')
+const { open } = require('sqlite')
 
 
 class mydatabase {
@@ -14,7 +14,6 @@ class mydatabase {
           driver: Database
         })
     }
-
     async closeDb(db) {
         db
     }
@@ -24,14 +23,12 @@ class mydatabase {
         await db.run(request, args);
         await db.close();
     }
-
     async getOne(request, args) {
         var db = await this.openDb();
         const result = await db.get(request, args);
         await db.close();
         return result;
     }
-
     async getAll(request, args) {
         var db = await this.openDb();
         const result = await db.all(request, args);
@@ -49,12 +46,17 @@ class mydatabase {
 
     async getGuildLangage(guild_id) {
         var result = await this.getOne(`SELECT langage FROM settings WHERE guild_id = ?`, [guild_id]);
-        return result.prefix;
+        return result.langage;
     }
     async setGuildLangage(guild_id, langage) {
         await this.request(`UPDATE settings SET langage = ? WHERE guild_id = ?`, [langage, guild_id]);
     }
+
+    async getText(langage, text_id) {
+        var result = await this.getOne(`SELECT * FROM lang WHERE text_id = ?`, [text_id])
+        return result[langage];
+    }
 }
 
 const database = new mydatabase('./src/data/database.sqlite3');
-export default database;
+module.exports = database;

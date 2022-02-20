@@ -12,6 +12,8 @@
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.0",
     "sqlite": "^4.0.23",
-    "sqlite3": "^5.0.2"
-  }
+    "sqlite3": "^5.0.2",
+    "winston": "^3.6.0"
+  },
+  "type": "commonjs"
 }
