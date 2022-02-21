@@ -36,6 +36,11 @@ class mydatabase {
         return result;
     }
 
+    async checkGuild(guild_id) {
+        await this.request('INSERT OR IGNORE INTO logging(guild_id) VALUES(?)', [guild_id]);
+        await this.request('INSERT OR IGNORE INTO settings(guild_id) VALUES(?)', [guild_id]);
+    }
+
     async getGuildPrefix(guild_id) {
         var result = await this.getOne(`SELECT prefix FROM settings WHERE guild_id = ?`, [guild_id]);
         return result.prefix;

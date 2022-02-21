@@ -60,9 +60,11 @@ bot.client.on('messageCreate', async message => {
 
 	//check if command is in bot's commands
     if (!bot.commands.has(command)) return
+    await bot.database.checkGuild(message.guildId);
+    const lang = await bot.database.getGuildLangage(message.guildId);
     bot.log.info(`Command "${command}" was invoked by (${message.author.id}) in (channel: ${message.channel.id})(guild: ${message.guild.id})`)
     try {
-        await bot.commands.get(command).execute(message, args, bot)
+        await bot.commands.get(command).execute(message, args, bot, lang)
     } catch (error) {
         bot.log.warn(`An error was occured with the command "${command}": ${error}`)
         message.reply('there was an error trying to execute that command!')
