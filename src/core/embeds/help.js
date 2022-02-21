@@ -21,7 +21,7 @@ module.exports = async function generate(lang, database) {
 
     const embed = new MessageEmbed()
         .setTitle(title)
-        .addFields(fields=fields);
+        .addFields(fields);
 
     return embed;
 }

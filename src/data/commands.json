@@ -27,7 +27,49 @@
                 "en": "Send link to invite bot",
                 "fr": "Envoie un lien pour inviter le bot"
             },
-            "args": [],
+            "args": {},
+            "permissions": []
+        },
+        "setlang": {
+            "usage": "setlang",
+            "aliases": [
+                "setlangage"
+            ],
+            "categorie": "admin",
+            "description": {
+                "en": "Set bot langage in the guild",
+                "fr": "Définie le langage du bot sur le serveur"
+            },
+            "args": {
+                "langage": {
+                    "type": "3",
+                    "description": {
+                        "en": "New bot's langage",
+                        "fr": "Nouveau langage du bot"
+                    }
+                }
+            },
+            "permissions": []
+        },
+        "setprefix": {
+            "usage": "setprefix",
+            "aliases": [
+                "prefix"
+            ],
+            "categorie": "admin",
+            "description": {
+                "en": "Set bot prefix in the guild",
+                "fr": "Définie le prefix du bot sur le serveur"
+            },
+            "args": {
+                "prefix": {
+                    "type": "3",
+                    "description": {
+                        "en": "New bot's prefix",
+                        "fr": "Nouveau prefix du bot"
+                    }
+                }
+            },
             "permissions": []
         }
     },
@@ -36,7 +78,13 @@
             "name": {
                 "en": "Info",
                 "fr": "Info"
-        }
+            }
+        },
+        "admin": {
+            "name": {
+                "en": "Administration",
+                "fr": "Administration"
+            }
         }
     }
 }

@@ -7,7 +7,7 @@ const logger = require('./src/core/logger')
 const database = require('./src/core/database')
 
 const TOKEN = process.env.TOKEN
-const { prefix, name } = config
+const { name } = config
 
 // Config
 const configSchema = {
@@ -51,8 +51,13 @@ for (const event of botEvents) {
 
 // Commands handler
 bot.client.on('messageCreate', async message => {
+    // ignore messages not in guild
+    if(!message.inGuild) return;
+
+    // get guild prefix
+    const prefix = await bot.database.getGuildPrefix(message.guildId);
     // ignore all other messages without our prefix
-    if (!message.content.startsWith(prefix)) return
+    if (!message.content.startsWith(prefix)) return;
 
     const args = message.content.split(" ")
     // get the first word (lowercase) and remove the prefix
