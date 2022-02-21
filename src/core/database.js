@@ -58,7 +58,7 @@ class mydatabase {
     }
 
     async getText(langage, text_id) {
-        var result = await this.getOne(`SELECT * FROM lang WHERE text_id = ?`, [text_id])
+        var result = await this.getOne(`SELECT * FROM lang WHERE text_id = ?`, [text_id]);
         return result[langage];
     }
 }
