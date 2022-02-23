@@ -1,11 +1,9 @@
-const admin = require('./admin');
-const info = require('./info');
-const owner = require('./owner');
+const messages = require('./messages');
+const reactions = require('./reactions');
 
 const events_categories = [
-    admin,
-    info,
-    owner
+    messages,
+    reactions
 ];
 
 var to_export = [];

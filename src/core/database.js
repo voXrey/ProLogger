@@ -14,9 +14,6 @@ class mydatabase {
           driver: Database
         })
     }
-    async closeDb(db) {
-        db
-    }
 
     async request(request, args) {
         var db = await this.openDb();
@@ -42,7 +39,7 @@ class mydatabase {
     }
 
     async getGuildPrefix(guild_id) {
-        var result = await this.getOne(`SELECT prefix FROM settings WHERE guild_id = ?`, [guild_id]);
+        const result = await this.getOne(`SELECT prefix FROM settings WHERE guild_id = ?`, [guild_id]);
         return result.prefix;
     }
     async setGuildPrefix(guild_id, prefix) {
@@ -58,8 +55,13 @@ class mydatabase {
     }
 
     async getText(langage, text_id) {
-        var result = await this.getOne(`SELECT * FROM lang WHERE text_id = ?`, [text_id]);
+        const result = await this.getOne(`SELECT * FROM lang WHERE text_id = ?`, [text_id]);
         return result[langage];
+    }
+
+    async getLogger(guild_id, logger) {
+        const result = await this.getOne(`SELECT ${logger} FROM logging WHERE guild_id = ?`, [guild_id]);
+        return JSON.parse(result.messages);
     }
 }
 

@@ -1,5 +1,5 @@
 require('dotenv').config()
-const { Client, Collection, Intents, MessageEmbed } = require('discord.js')
+const { Client, Collection, Intents } = require('discord.js')
 const config = require('./src/data/config.json')
 const botCommands = require('./src/commands')
 const botEvents = require('./src/events')
@@ -21,9 +21,13 @@ const configSchema = {
     },
 }
 
+// create client with all intents
+const client = new Client({intents:new Intents(32767)})
+    .setMaxListeners(0);
+
 // Define the bot
 const bot = {
-    client: new Client({intents:new Intents(32767)}),
+    client: client,
     log: logger,
     database: database,
     commands: new Collection(),
@@ -55,7 +59,8 @@ bot.client.on('messageCreate', async message => {
     if(!message.inGuild) return;
 
     // get guild prefix
-    const prefix = await bot.database.getGuildPrefix(message.guildId);
+    var prefix = await bot.database.getGuildPrefix(message.guildId);
+    if(prefix=='default') prefix = '!';
     // ignore all other messages without our prefix
     if (!message.content.startsWith(prefix)) return;
 
