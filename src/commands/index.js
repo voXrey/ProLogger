@@ -1,11 +1,13 @@
 const admin = require('./admin');
 const info = require('./info');
 const owner = require('./owner');
+const logging = require('./logging');
 
 const events_categories = [
     admin,
     info,
-    owner
+    owner,
+    logging
 ];
 
 var to_export = [];
